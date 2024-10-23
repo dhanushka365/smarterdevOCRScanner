@@ -1,0 +1,34 @@
+# Function to draw bounding boxes
+def draw_bounding_boxes(img_cv, df):
+    image = img_cv.copy()
+    level = 'word'
+    
+    for l, x, y, w, h, c, txt in df[['level', 'left', 'top', 'width', 'height', 'conf', 'text']].values:
+        if level == 'page':
+            if l == 1:
+                cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 0), 2)
+            else:
+                continue
+        elif level == 'block':
+            if l == 2:
+                cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            else:
+                continue
+        elif level == 'para':
+            if l == 3:
+                cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            else:
+                continue
+        elif level == 'line':
+            if l == 4:
+                cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            else:
+                continue
+        elif level == 'word':
+            if l == 5:
+                cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv2.putText(image, txt, (x, y), cv2.FONT_HERSHEY_PLAIN, 1, (255, 0, 0), 2)
+            else:
+                continue
+
+    return image

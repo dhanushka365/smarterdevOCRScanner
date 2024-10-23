@@ -1,0 +1,20 @@
+# Function to display the image with scroll in Tkinter
+def display_image_with_scroll(image):
+    # Resize the image to fit the screen size
+    desired_width = 800  # Set desired width
+    desired_height = 600  # Set desired height
+    
+    # Resize the image while maintaining aspect ratio
+    aspect_ratio = image.shape[1] / image.shape[0]
+    if aspect_ratio > 1:  # Image is wider than tall
+        new_width = desired_width
+        new_height = int(desired_width / aspect_ratio)
+    else:  # Image is taller than wide
+        new_height = desired_height
+        new_width = int(desired_height * aspect_ratio)
+    
+    # Resize the image
+    resized_image = cv2.resize(image, (new_width, new_height))
+    
+    # Display the resized image
+    cv2.imshow("Bounding Box", resized_image)
